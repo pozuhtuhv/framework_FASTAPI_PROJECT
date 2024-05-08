@@ -1,0 +1,52 @@
+{% include 'layout.html' %}
+
+<div class="container">
+    <div class="card text-center">
+        <div class="card-header">
+            Your posts!
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">List of your posts!</h5>
+            <p class="card-text">Information regarding stuff that needs to be complete</p>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Date</th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for post in posts %}
+
+                <tr>
+
+                    <td>{{loop.index}}</td>
+                    <td>{{post.title}}</td>
+                    <td>{{post.description}}</td>
+                    <td>{{post.username}}</td>
+                    <td>
+                        <button onclick="window.location.href='edit-post/{{post.id}}'"
+                                type="button" class="btn btn-info">
+                            Edit
+                        </button>
+                    </td>
+                    <td>{{post.post_time}}</td>
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+            <a href="add-post" class="btn btn-primary">Add a new Post!</a>
+        </div>
+    </div>
+</div>
+
