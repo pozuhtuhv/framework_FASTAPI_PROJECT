@@ -1,0 +1,6 @@
+/__pycache__
+/include
+/Lib
+/Scripts
+pyvenv.cfg
+/routers/__pycache__
