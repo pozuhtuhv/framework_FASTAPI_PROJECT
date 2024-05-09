@@ -10,6 +10,7 @@ from database import get_db
 from fastapi import APIRouter, Depends, Form, Query, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 from starlette import status
@@ -25,6 +26,10 @@ router = APIRouter(
 )
 
 templates = Jinja2Templates(directory="templates")
+
+class PostCreate(BaseModel):
+    title: str = Form(..., max_length=50)
+    description: str = Form(..., max_length=300)
 
 # 로그인 후 home 이동 글 리스트 확인
 @router.get("/", response_class=HTMLResponse)
@@ -60,15 +65,15 @@ async def add_new_post(request: Request):
 
 # 글쓰기 데이터 전송
 @router.post("/add-post", response_class=HTMLResponse)
-async def create_post(request: Request, title: str = Form(...), description: str = Form(...),
-                     db: Session = Depends(get_db)):
+async def create_post(request: Request, post_data: PostCreate = Depends(PostCreate.as_form),
+                      db: Session = Depends(get_db)):
     user = await get_current_user(request)
     if user is None:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     
     post_model = models.Posts()
-    post_model.title = title
-    post_model.description = description
+    post_model.title = post_data.title
+    post_model.description = post_data.description
     post_model.username = user.get('username')
     post_model.post_time = datetime.now().strftime('%Y-%m-%d %H:%M')
     post_model.owner_id = user.get("id")
