@@ -2,6 +2,7 @@ import sys
 
 sys.path.append("..")
 
+from dataclasses import dataclass
 from datetime import datetime
 from math import ceil
 
@@ -10,7 +11,6 @@ from database import get_db
 from fastapi import APIRouter, Depends, Form, Query, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel, Field
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 from starlette import status
@@ -27,26 +27,21 @@ router = APIRouter(
 
 templates = Jinja2Templates(directory="templates")
 
-# pydantic 정의 ~51
-class PostModel(BaseModel):
-    title: str = Field(..., min_length=1, max_length=30, description="The title of the post")
-    description: str = Field(..., min_length=1, description="The detailed description of the post")
-def post_form_data(title: str = Form(...), description: str = Form(...)):
-    return PostModel(title=title, description=description)
+# pydantic 정의가 아닌 다른방법 ~44
+@dataclass
+class PostModel:
+    title: int = Form(...)
+    description: str = Form(...)
 
-class EditModel(BaseModel):
+@dataclass
+class EditModel:
     post_id: int
-    title: str = Field(..., min_length=1, max_length=100, description="The title of the edit")
-    description: str = Field(..., min_length=1, description="The detailed description of the edit")
-    
-def edit_form_data(post_id: int, title: str = Form(...), description: str = Form(...)):
-    return EditModel(post_id=post_id, title=title, description=description)
+    title: int = Form(...)
+    description: str = Form(...)
 
-class DelModel(BaseModel):
+@dataclass
+class DelModel:
     post_id: int
-
-def del_data(post_id: int):
-    return DelModel(post_id=post_id)
 
 # 로그인 후 home 이동 글 리스트 확인
 @router.get("/", response_class=HTMLResponse)
@@ -82,7 +77,7 @@ async def add_new_post(request: Request):
 
 # 글쓰기 데이터 전송
 @router.post("/add-post", response_class=HTMLResponse)
-async def create_post(request: Request, post_data: PostModel = Depends(post_form_data), db: Session = Depends(get_db)):
+async def create_post(request: Request, post_data: PostModel = Depends(), db: Session = Depends(get_db)):
     user = await get_current_user(request)
     if user is None:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
@@ -112,7 +107,7 @@ async def edit_post(request: Request, post_id: int, db: Session = Depends(get_db
 
 # 글수정 데이터 전송
 @router.post("/edit-post/{post_id}", response_class=HTMLResponse)
-async def edit_post_commit(request: Request, edit_data: EditModel = Depends(edit_form_data), db: Session = Depends(get_db)):
+async def edit_post_commit(request: Request, edit_data: EditModel = Depends(), db: Session = Depends(get_db)):
 
     user = await get_current_user(request)
     if user is None:
@@ -130,7 +125,7 @@ async def edit_post_commit(request: Request, edit_data: EditModel = Depends(edit
 
 # 글삭제 데이터 전송
 @router.get("/delete/{post_id}")
-async def delete_post(request: Request, del_data: DelModel = Depends(del_data), db: Session = Depends(get_db)):
+async def delete_post(request: Request, del_data: DelModel = Depends(), db: Session = Depends(get_db)):
 
     user = await get_current_user(request)
     if user is None:
