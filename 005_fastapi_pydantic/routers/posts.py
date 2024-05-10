@@ -2,19 +2,21 @@ import sys
 
 sys.path.append("..")
 
+from dataclasses import dataclass
 from datetime import datetime
 from math import ceil
 
-import models
-from database import get_db
 from fastapi import APIRouter, Depends, Form, Query, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 from starlette import status
 from starlette.responses import RedirectResponse
+
+import models
+from database import get_db
 
 from .auth import get_current_user
 
@@ -27,9 +29,26 @@ router = APIRouter(
 
 templates = Jinja2Templates(directory="templates")
 
-class PostCreate(BaseModel):
-    title: str = Form(..., max_length=50)
-    description: str = Form(..., max_length=300)
+# pydantic 정의 ~51
+class PostModel(BaseModel):
+    title: str = Field(..., min_length=1, max_length=30, description="The title of the post")
+    description: str = Field(..., min_length=1, description="The detailed description of the post")
+def post_form_data(title: str = Form(...), description: str = Form(...)):
+    return PostModel(title=title, description=description)
+
+class EditModel(BaseModel):
+    post_id: int
+    title: str = Field(..., min_length=1, max_length=100, description="The title of the edit")
+    description: str = Field(..., min_length=1, description="The detailed description of the edit")
+    
+def edit_form_data(post_id: int, title: str = Form(...), description: str = Form(...)):
+    return EditModel(post_id=post_id, title=title, description=description)
+
+class DelModel(BaseModel):
+    post_id: int
+
+def del_data(post_id: int):
+    return DelModel(post_id=post_id)
 
 # 로그인 후 home 이동 글 리스트 확인
 @router.get("/", response_class=HTMLResponse)
@@ -65,8 +84,7 @@ async def add_new_post(request: Request):
 
 # 글쓰기 데이터 전송
 @router.post("/add-post", response_class=HTMLResponse)
-async def create_post(request: Request, post_data: PostCreate = Depends(PostCreate.as_form),
-                      db: Session = Depends(get_db)):
+async def create_post(request: Request, post_data: PostModel = Depends(post_form_data), db: Session = Depends(get_db)):
     user = await get_current_user(request)
     if user is None:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
@@ -96,17 +114,16 @@ async def edit_post(request: Request, post_id: int, db: Session = Depends(get_db
 
 # 글수정 데이터 전송
 @router.post("/edit-post/{post_id}", response_class=HTMLResponse)
-async def edit_post_commit(request: Request, post_id: int, title: str = Form(...),
-                           description: str = Form(...), db: Session = Depends(get_db)):
+async def edit_post_commit(request: Request, edit_data: EditModel = Depends(edit_form_data), db: Session = Depends(get_db)):
 
     user = await get_current_user(request)
     if user is None:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
 
-    post_model = db.query(models.Posts).filter(models.Posts.id == post_id).first()
+    post_model = db.query(models.Posts).filter(models.Posts.id == edit_data.post_id).first()
 
-    post_model.title = title
-    post_model.description = description
+    post_model.title = edit_data.title
+    post_model.description = edit_data.description
 
     db.add(post_model)
     db.commit()
@@ -115,7 +132,7 @@ async def edit_post_commit(request: Request, post_id: int, title: str = Form(...
 
 # 글삭제 데이터 전송
 @router.get("/delete/{post_id}")
-async def delete_post(request: Request, post_id: int, db: Session = Depends(get_db)):
+async def delete_post(request: Request, del_data: DelModel = Depends(del_data), db: Session = Depends(get_db)):
 
     user = await get_current_user(request)
     if user is None:
@@ -123,13 +140,13 @@ async def delete_post(request: Request, post_id: int, db: Session = Depends(get_
 
     # 로그인 한유저가 같은지 필터링
     if user.get('role') == 'admin': # admin 이 아닐결우 필터링해서
-        post_model = db.query(models.Posts).filter(models.Posts.id == post_id).first()
+        post_model = db.query(models.Posts).filter(models.Posts.id == del_data.post_id).first()
     else:
-        post_model = db.query(models.Posts).filter(models.Posts.id == post_id).filter(models.Posts.owner_id == user.get("id")).first()
+        post_model = db.query(models.Posts).filter(models.Posts.id == del_data.post_id).filter(models.Posts.owner_id == user.get("id")).first()
     if post_model is None:
         return RedirectResponse(url="/posts/", status_code=status.HTTP_302_FOUND)
 
-    db.query(models.Posts).filter(models.Posts.id == post_id).delete()
+    db.query(models.Posts).filter(models.Posts.id == del_data.post_id).delete()
 
     db.commit()
 
