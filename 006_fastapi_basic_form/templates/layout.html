@@ -5,13 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PostApp</title>
-
+    <style>
+        table{
+            border : 1px solid black;
+            border-collapse : collapse;
+        }
+        table {
+            margin : auto;
+            width:40%; 
+            margin-bottom: 1%;
+        }
+        input, textarea{
+            width: 90%; 
+        }
+        th, td{
+	        text-align: center;
+        }
+        .find-btn{
+	        text-align: center;
+        }
+    </style>
 </head>
 <body>
+        {% block content %}
 
-{% block content %}
-
-{% endblock %}
-
+        {% endblock %}
 </body>
 </html>

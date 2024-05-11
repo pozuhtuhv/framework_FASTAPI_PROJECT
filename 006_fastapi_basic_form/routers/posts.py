@@ -116,6 +116,18 @@ async def edit_post_commit(request: Request, edit_data: EditModel = Depends(edit
 
     return RedirectResponse(url="/posts/", status_code=status.HTTP_302_FOUND)
 
+# 글조회 템플릿 연결
+@router.get("/read-post/{post_id}", response_class=HTMLResponse)
+async def read_post(request: Request, post_id: int, db: Session = Depends(get_db)):
+
+    user = await get_current_user(request)
+    if user is None:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+
+    post = db.query(models.Posts).filter(models.Posts.id == post_id).first()
+
+    return templates.TemplateResponse("read-post.html", {"request": request, "post": post, "user": user})
+
 # 글삭제 데이터 전송
 @router.get("/delete/{post_id}")
 async def delete_post(request: Request, del_data: DelModel = Depends(del_data), db: Session = Depends(get_db)):

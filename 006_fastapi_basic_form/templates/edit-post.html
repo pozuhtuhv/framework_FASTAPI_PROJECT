@@ -12,7 +12,7 @@
     <tr>
         <th>Username</th>
         <td>
-            <input type="text" name="Username" value="{{post.Username}}" disabled>
+            <input type="text" name="Username" value="{{post.username}}" disabled>
         </td>
     </tr>
     <tr>
@@ -22,6 +22,8 @@
         </td>
     </tr>
 </table>
+<div class="find-btn">
 <button type="submit">Edit</button>
 <button onclick="window.location.href='/posts/delete/{{post.id}}'" type="button">Delete</button>
+</div>
 </form>

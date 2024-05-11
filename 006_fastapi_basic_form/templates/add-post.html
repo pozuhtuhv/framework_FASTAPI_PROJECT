@@ -1,5 +1,4 @@
 {% include 'layout.html' %}
-
 <form method="POST">
 <table border="1">
     <tr>
@@ -11,9 +10,11 @@
     <tr>
         <th>Description</th>
         <td>
-            <textarea name="description" required></textarea>
+            <textarea rows="8" name="description" required></textarea>
         </td>
     </tr>
 </table>
-<button type="submit">New Post</button>
+<div class="find-btn">
+    <button type="submit">New Post</button>
+</div>
 </form>
