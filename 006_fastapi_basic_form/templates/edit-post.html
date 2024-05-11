@@ -1,0 +1,27 @@
+{% include 'layout.html' %}
+
+<form method="post">
+    <input type="hidden" name="Username" value="{{post.Username}}">
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <td>
+            <input type="text" name="title" value="{{post.title}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Username</th>
+        <td>
+            <input type="text" name="Username" value="{{post.Username}}" disabled>
+        </td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>
+            <textarea name="description">{{post.description}}</textarea>
+        </td>
+    </tr>
+</table>
+<button type="submit">Edit</button>
+<button onclick="window.location.href='/posts/delete/{{post.id}}'" type="button">Delete</button>
+</form>

@@ -1,0 +1,19 @@
+{% include 'layout.html' %}
+
+<form method="POST">
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <td>
+            <input type="text" name="title" required>
+        </td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>
+            <textarea name="description" required></textarea>
+        </td>
+    </tr>
+</table>
+<button type="submit">New Post</button>
+</form>

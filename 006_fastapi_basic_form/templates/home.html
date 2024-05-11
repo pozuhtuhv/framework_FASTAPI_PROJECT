@@ -1,0 +1,20 @@
+{% include 'layout.html' %}
+    <table border="1">
+        <tr>
+            <th>No</th>
+            <th>Title</th>
+            <th>Username</th>
+            <th>Action</th>
+        </tr>
+        {% for post in posts %}
+        <tr>
+            <td>{{post.id}}</td>
+            <td>{{post.title}}</td>
+            <td>{{post.username}}</td>
+            <td><button onclick="window.location.href='edit-post/{{post.id}}'" type="button">
+            Edit
+        </button></td>
+        </tr>
+        {% endfor %}
+    </table>
+<a href="add-post"><button>등록</button></a>
