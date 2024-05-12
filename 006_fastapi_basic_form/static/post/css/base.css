@@ -1,9 +1,11 @@
 body{
-  font-family: "Font Awesome 6 Free";
+  font-family: -apple-system, blinkmacsystemfont, helvetica neue, apple sd gothic neo, sans-serif;
 }
+
 h2{
   text-align: center;
 }
+
 a {
   text-decoration: none;
   cursor: pointer
@@ -14,9 +16,6 @@ a:link,a:visited {
   text-decoration: none
 }
 
-a:active {
-  text-decoration: none
-}
 
 a:hover {
   color: #009688;
@@ -28,14 +27,13 @@ table{
   margin : auto;
   margin-bottom: 1%;
 }
+
 th, td {
   border: 1px solid black;
   padding: 1% 5px 1% 5px; /* 위 오른쪽 아래 왼쪽 */
   text-align: center;
 }
-button {
-  border-radius: 0;
-}
+
 .find-btn{
   text-align: center;
 }
