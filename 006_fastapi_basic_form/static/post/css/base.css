@@ -1,9 +1,27 @@
 body{
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Font Awesome 6 Free";
 }
 h2{
   text-align: center;
 }
+a {
+  text-decoration: none;
+  cursor: pointer
+}
+
+a:link,a:visited {
+  color: #000;
+  text-decoration: none
+}
+
+a:active {
+  text-decoration: none
+}
+
+a:hover {
+  color: #009688;
+}
+
 table{
   border : 2px solid black;
   border-collapse : collapse;
@@ -14,6 +32,9 @@ th, td {
   border: 1px solid black;
   padding: 1% 5px 1% 5px; /* 위 오른쪽 아래 왼쪽 */
   text-align: center;
+}
+button {
+  border-radius: 0;
 }
 .find-btn{
   text-align: center;

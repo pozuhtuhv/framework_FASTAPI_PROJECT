@@ -8,3 +8,5 @@
 ###### Pydantic connect (completed) or dataclass way (completed)
 ###### Post PageNation 작동 (ing)
 ###### 기존 디자인보다 보기가 편한 클래식 디자인으로 변경 (ing)
+
+uvicorn main:app --reload --host=0.0.0.0 --port=80
