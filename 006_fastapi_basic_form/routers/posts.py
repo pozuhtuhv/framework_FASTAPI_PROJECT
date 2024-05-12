@@ -54,10 +54,9 @@ async def read_all_by_user(request: Request, db: Session = Depends(get_db)):
     user = await get_current_user(request)
     if user is None:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
-
-    posts = db.query(models.Posts).filter(models.Posts.owner_id == user.get("id")).all()
-
-    return templates.TemplateResponse("home.html", {"request": request, "posts": posts, "user": user})
+    else:
+        posts = db.query(models.Posts).filter(models.Posts.username == user.get("username")).order_by(desc(models.Posts.id)).all()
+        return templates.TemplateResponse("home.html", {"request": request, "posts": posts, "user": user})
 
 # 글쓰기 템플릿 연결 
 @router.get("/add-post", response_class=HTMLResponse)
@@ -80,11 +79,10 @@ async def create_post(request: Request, post_data: PostModel = Depends(post_form
     post_model.description = post_data.description
     post_model.username = user.get('username')
     post_model.post_time = datetime.now().strftime('%Y-%m-%d %H:%M')
-    post_model.owner_id = user.get("id")
     db.add(post_model)
     db.commit()
 
-    return RedirectResponse(url="/posts/", status_code=status.HTTP_302_FOUND)
+    return RedirectResponse(url="/posts", status_code=status.HTTP_302_FOUND)
 
 # 글수정 템플릿 연결
 @router.get("/edit-post/{post_id}", response_class=HTMLResponse)
@@ -114,7 +112,7 @@ async def edit_post_commit(request: Request, edit_data: EditModel = Depends(edit
     db.add(post_model)
     db.commit()
 
-    return RedirectResponse(url="/posts/", status_code=status.HTTP_302_FOUND)
+    return RedirectResponse(url="/posts", status_code=status.HTTP_302_FOUND)
 
 # 글조회 템플릿 연결
 @router.get("/read-post/{post_id}", response_class=HTMLResponse)
@@ -140,12 +138,12 @@ async def delete_post(request: Request, del_data: DelModel = Depends(del_data), 
     if user.get('role') == 'admin': # admin 이 아닐결우 필터링해서
         post_model = db.query(models.Posts).filter(models.Posts.id == del_data.post_id).first()
     else:
-        post_model = db.query(models.Posts).filter(models.Posts.id == del_data.post_id).filter(models.Posts.owner_id == user.get("id")).first()
+        post_model = db.query(models.Posts).filter(models.Posts.id == del_data.post_id).filter(models.Posts.username == user.get("username")).first()
     if post_model is None:
-        return RedirectResponse(url="/posts/", status_code=status.HTTP_302_FOUND)
+        return RedirectResponse(url="/posts", status_code=status.HTTP_302_FOUND)
 
     db.query(models.Posts).filter(models.Posts.id == del_data.post_id).delete()
 
     db.commit()
 
-    return RedirectResponse(url="/posts/", status_code=status.HTTP_302_FOUND)
+    return RedirectResponse(url="/posts", status_code=status.HTTP_302_FOUND)

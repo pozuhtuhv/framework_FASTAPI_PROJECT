@@ -14,7 +14,7 @@ class Users(Base):
     username = Column(String(50), unique=True, index=True)
     role = Column(String(20))
     hashed_password = Column(String(128))
-    is_active = Column(Boolean, default=True)
+    auth_time = Column(String(30))
 
 
 class Posts(Base):
@@ -25,5 +25,3 @@ class Posts(Base):
     description = Column(String(300))
     username = Column(String(50))
     post_time = Column(String(20))
-    owner_id = Column(Integer, ForeignKey("users.id"))
-

@@ -1,22 +1,21 @@
-
-body {
-  background: #fafafa;
-  color: #33333a;
-  padding-top: 70px;
+h2{
+  text-align: center;
 }
-
-h1, h2, h3, h4, h5, h6 {
-  color: #323232;
+table{
+  border : 1px solid black;
+  border-collapse : collapse;
 }
-
-.main-color {
-  background-color: #0e76a8 ;
+table {
+  margin : auto;
+  width:40%; 
+  margin-bottom: 1%;
 }
-
-.strike-through-td {
-    text-decoration: line-through;
+input, textarea{
+  width: 90%; 
 }
-
-
-
-
+th, td{
+  text-align: center;
+}
+.find-btn{
+  text-align: center;
+}

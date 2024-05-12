@@ -165,6 +165,7 @@ async def register_user(request: Request, email: str = Form(...), username: str 
     hash_password = get_password_hash(password)
     user_model.hashed_password = hash_password
     user_model.role = "nomal"
+    user_model.auth_time = datetime.now().strftime('%Y-%m-%d %H:%M')
     user_model.is_active = True
 
     db.add(user_model)
