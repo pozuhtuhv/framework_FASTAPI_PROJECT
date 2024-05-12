@@ -1,19 +1,18 @@
+body{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
 h2{
   text-align: center;
 }
 table{
-  border : 1px solid black;
+  border : 2px solid black;
   border-collapse : collapse;
-}
-table {
   margin : auto;
-  width:40%; 
   margin-bottom: 1%;
 }
-input, textarea{
-  width: 90%; 
-}
-th, td{
+th, td {
+  border: 1px solid black;
+  padding: 1% 5px 1% 5px; /* 위 오른쪽 아래 왼쪽 */
   text-align: center;
 }
 .find-btn{
