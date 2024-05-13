@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("..")
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 from fastapi import (APIRouter, Depends, Form, HTTPException, Request,
@@ -44,7 +44,7 @@ class LoginForm:
 
     async def create_oauth_form(self):
         form = await self.request.form()
-        self.username = form.get("email")
+        self.username = form.get("username")
         self.password = form.get("password")
 
 def get_password_hash(password):
@@ -70,9 +70,9 @@ def create_access_token(username: str, user_id: int, role : str,
 
     encode = {"sub": username, "id": user_id, "role": role}
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now(timezone.utc) + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.now(timezone.utc) + timedelta(minutes=1)
     encode.update({"exp": expire})
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
 

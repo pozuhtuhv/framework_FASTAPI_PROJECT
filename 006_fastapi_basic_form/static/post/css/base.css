@@ -2,6 +2,11 @@ body{
   font-family: -apple-system, blinkmacsystemfont, helvetica neue, apple sd gothic neo, sans-serif;
 }
 
+.msg {
+  color: red;
+  text-align: center;
+}
+
 h2{
   text-align: center;
 }

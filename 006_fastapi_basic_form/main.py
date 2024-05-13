@@ -10,10 +10,10 @@ favicon_path = 'favicon.ico'
 
 models.Base.metadata.create_all(bind=engine)
 
-# 정적파일 서비스 위치 설정
+# html 디자인 및 파일 서비스 위치 설정
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# 라우터 연결
+# 라우터 경로 연결
 app.include_router(auth.router)
 app.include_router(posts.router)
 
