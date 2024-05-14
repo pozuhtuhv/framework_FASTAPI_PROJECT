@@ -80,4 +80,20 @@ th, td {
 
 /* btn section end*/
 
+/* IP blcok section start */
+.ipblock-container {
+  display: inline-block;
+  text-align: left;
+  margin-top: 2rem;
+}
 
+.ipblock-title {
+  color: #ff0000;
+  text-align: center;
+}
+
+.ipblock-message {
+  color: #555555;
+  text-align: center;
+}
+/* IP blcok section start */
