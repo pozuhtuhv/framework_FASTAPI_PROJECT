@@ -42,13 +42,6 @@ class EditModel(BaseModel):
 def edit_form_data(post_id: int, title: str = Form(...), action: str = Form(...), password: str = Form(...), description: str = Form(...)):
     return EditModel(post_id=post_id, title=title, action=action, password=password, description=description)
 
-class DelModel(BaseModel):
-    password: str = Field(..., min_length=1, max_length=30)
-
-def del_form_data(password: str = Form(...)):
-    return DelModel(password=password)
-
-
 @router.get("/", response_class=HTMLResponse)
 async def read_all_by_user(request: Request, db: Session = Depends(get_db)):
 
