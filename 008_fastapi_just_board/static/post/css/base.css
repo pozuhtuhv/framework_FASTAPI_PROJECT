@@ -1,0 +1,93 @@
+body{
+  font-family: -apple-system, blinkmacsystemfont, helvetica neue, apple sd gothic neo, sans-serif;
+}
+
+.msg {
+  color: red;
+  text-align: center;
+}
+
+h2{
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer
+}
+
+a:link,a:visited {
+  color: #000;
+  text-decoration: none
+}
+
+
+a:hover {
+  color: #009688;
+}
+
+/* table section start*/
+.list-table {
+  width: 50%;
+  margin : auto;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 3px;
+  text-align: center;
+}
+.no {
+  width: 10%;
+}
+.title {
+  width: 50%;
+}
+.username {
+  width: 20%;
+}
+.action {
+  width: 20%;
+}
+.other-table{
+  border : 2px solid black;
+  border-collapse : collapse;
+  margin : auto;
+  margin-bottom: 1%;
+}
+/* table section end*/
+
+/* btn section start*/
+.login-btn{
+  text-align: center;
+}
+.edit-btn{
+  text-align: center;
+}
+.add-btn{
+  text-align: center;
+}
+.read-btn{
+  text-align: center;
+}
+
+/* btn section end*/
+
+/* IP blcok section start */
+.ipblock-container {
+  display: inline-block;
+  text-align: left;
+  margin-top: 2rem;
+}
+
+.ipblock-title {
+  color: #ff0000;
+  text-align: center;
+}
+
+.ipblock-message {
+  color: #555555;
+  text-align: center;
+}
+/* IP blcok section start */

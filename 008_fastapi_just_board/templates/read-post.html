@@ -1,0 +1,19 @@
+{% include 'layout.html' %}
+
+<table border="1" class="other-table">
+    <tr>
+        <th>Title</th>
+        <td>{{post.title}}</td>
+    </tr>
+    <tr>
+        <th>Username</th>
+        <td>{{post.username}}</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>{{post.description}}</td>
+    </tr>
+</table>
+<div class="read-btn">
+    <a href="/posts/"><button>List Post</button></a>
+</div>

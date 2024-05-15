@@ -1,0 +1,35 @@
+{% include 'layout.html' %}
+
+<!-- Edit/Delete Form -->
+<form method="post" action="/posts/edit-post/{{post.id}}">
+    <table border="1" class="other-table">
+        <tr>
+            <th>Title</th>
+            <td>
+                <input type="text" name="title" value="{{post.title}}">
+            </td>
+        </tr>
+        <tr>
+            <th>Username</th>
+            <td>
+                <input type="text" name="username" value="{{post.username}}" disabled>
+            </td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>
+                <textarea name="description">{{post.description}}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td>
+                <input type="password" name="password" required>
+            </td>
+        </tr>
+    </table>
+    <div class="edit-btn">
+        <button type="submit" name="action" value="edit">Edit</button>
+        <button type="submit" name="action" value="delete">Delete</button>
+    </div>
+</form>

@@ -1,0 +1,32 @@
+{% include 'layout.html' %}
+<form method="POST">
+<table border="1" class="other-table">
+    <tr>
+        <th>Title</th>
+        <td>
+            <input type="text" name="title" required>
+        </td>
+    </tr>
+    <tr>
+        <th>Username</th>
+        <td>
+            <input type="text" name="username" required>
+        </td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>
+            <textarea rows="8" name="description" required></textarea>
+        </td>
+    </tr>
+    <tr>
+        <th>Password</th>
+        <td>
+            <input type="password" name="password" required>
+        </td>
+    </tr>
+</table>
+<div class="add-btn">
+    <button type="submit">New Post</button>
+</div>
+</form>
