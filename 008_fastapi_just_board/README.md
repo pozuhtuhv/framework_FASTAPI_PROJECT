@@ -9,5 +9,6 @@
 ###### Post PageNation 작동 (ing)
 ###### 기존 디자인보다 보기가 편한 클래식 디자인으로 변경 (completed)
 ###### IPblock 차단 기능 추가 (SQL 연동 진행예정)
+###### Edit, Delete Code 수정
 
 uvicorn main:app --reload --host=0.0.0.0 --port=80

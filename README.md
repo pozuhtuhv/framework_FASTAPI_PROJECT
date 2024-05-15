@@ -9,7 +9,7 @@
 ###### 005_fastapi_pydantic : pydantic 검증 연결 or dataclass 데이터 연결
 ###### 006_fastapi_basic_form : 모두 basic 기본폼으로 변경 read 추가 (페이지네이션 삭제 재구성중)
 ###### 007_fastapi_ipblock : ipblock 기능 추가
-
+###### 008_just_board : 로그인 필요없는 일반 게시판 설정 (수정 및 삭제 기능 최적화)
 
 ###### Auth 인증, post, Main 페이지 수정 (completed)
 ###### Form 형식 제작 (login, post, edit) (completed)
@@ -18,6 +18,7 @@
 ###### Post PageNation 작동 (ing)
 ###### 기존 디자인보다 보기가 편한 클래식 디자인으로 변경 (completed)
 ###### IPblock 차단 기능 추가 (SQL 연동 진행예정)
+###### Edit, Delete Code 수정
 
 ###### uvicorn main:app --reload --host=0.0.0.0 --port=80
 ###### https://www.yougetsignal.com/tools/open-ports/  -> 열린 포트 확인
