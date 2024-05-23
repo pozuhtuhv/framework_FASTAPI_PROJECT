@@ -1,4 +1,4 @@
-# FAST API Service Admin update
+# 008_FASTAPI_JUST_BOARD
 
 <!-- ![docs](https://raw.githubusercontent.com/pozuhtuhv/0000_imgstorage/main/005_fastapi_form.png) -->
 
